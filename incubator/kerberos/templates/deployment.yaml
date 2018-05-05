@@ -20,10 +20,17 @@ spec:
         release: {{ .Release.Name }}
     spec:
       hostname: {{ template "kerberos.name" . }}
+      volumes:
+      - name: ldapsecret
+        secret:
+          secretName: ldapsecret
+      - name: krbsecret
+        secret:
+          secretName: krbsecret
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+#          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
           - name: krb1
             containerPort: 88
@@ -37,27 +44,34 @@ spec:
             containerPort: 2122
           - name: ssl-ldap
             containerPort: 636          
-          env:
-          - name: LDAP_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: ldapsecret
-                key: password
-          - name: KERB_ADMIN_PASS
-            valueFrom:
-              secretKeyRef:
-                name: krbsecret
-                key: password
-          - name: KDC_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: krbsecret
-                key: kdcpassword
-          - name: ADM_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: krbsecret
-                key: admpassword
+#          env:
+#          - name: LDAP_PASSWORD
+#            valueFrom:
+#              secretKeyRef:
+#                name: ldapsecret
+#                key: password
+#          - name: KERB_ADMIN_PASS
+#            valueFrom:
+#              secretKeyRef:
+#                name: krbsecret
+#                key: password
+#          - name: KDC_PASSWORD
+#            valueFrom:
+#              secretKeyRef:
+#                name: krbsecret
+#                key: kdcpassword
+#          - name: ADM_PASSWORD
+#            valueFrom:
+#              secretKeyRef:
+#                name: krbsecret
+#                key: admpassword
+          volumeMounts:
+          - name: ldapsecret
+            mountPath: /etc/secret/ldap/
+            readOnly: true
+          - name: krbsecret
+            mountPath: /etc/secret/krb/
+            readOnly: true
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}

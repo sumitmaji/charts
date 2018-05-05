@@ -27,6 +27,12 @@ kubectl edit endpoints kubernetes -n default
 
 # Useful helm command
 
+- To create a new chart
+
+```console
+helm create mychart
+```
+
 - To list helm releases
 
 ```console
