@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "mychart.fullname" . }}
+  labels:
+    release: {{ .Release.Name }}
+    app: {{ template "mychart.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    heritage: {{ .Release.Service }}
+data:
+  myvalue: "Hello World"
