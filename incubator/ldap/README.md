@@ -14,13 +14,13 @@ $ helm install incubator/ldap --name ldap
 
 To uninstall/delete the `ldap` deployment:
 
--The command removes all the Kubernetes components associated with the chart and deletes the release.
+- The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ```console
 $ helm delete --purge ldap
 ```
 
--The command removes nearly all the Kubernetes components associated with the chart and deletes the release.
+- The command removes nearly all the Kubernetes components associated with the chart and deletes the release.
 
 ```console
 $ helm delete ldap
