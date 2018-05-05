@@ -18,7 +18,7 @@ kubectl apply -f rbac.yaml && \
 helm init --service-account tiller
 ```
 
-(Note: Due to some bug kubernets service in default name points incorrect port in the endpoint, hence need to chnage this endpoint port(from 6443 to 443) on every vm restart )
+(Note: Due to some bug kubernets service in default namespace points to incorrect port in the endpoint, hence need to chnage this endpoint port(from 6443 to 443) on every vm restart. Because of this bug, helm does not work. )
 
 ```console
 kubectl edit endpoints kubernetes -n default
