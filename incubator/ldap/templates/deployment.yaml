@@ -20,10 +20,17 @@ spec:
         release: {{ .Release.Name }}
     spec:
       hostname: {{ template "ldap.name" . }}
+      volumes:
+      - name: ldapsecret
+        secret: 
+          secretName: ldapsecret
+      - name: krbsecret
+        secret: 
+          secretName: krbsecret
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+#          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: ui
               containerPort: 8181
@@ -43,17 +50,24 @@ spec:
             - name: ssl-udp
               containerPort: 636
               protocol: UDP
-          env:
-          - name: LDAP_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: ldapsecret
-                key: password
-          - name: KERB_ADMIN_PASS
-            valueFrom:
-              secretKeyRef:
-                name: krbsecret
-                key: password
+#          env:
+#          - name: LDAP_PASSWORD
+#            valueFrom:
+#              secretKeyRef:
+#                name: ldapsecret
+#                key: password
+#          - name: KERB_ADMIN_PASS
+#            valueFrom:
+#              secretKeyRef:
+#                name: krbsecret
+#                key: password
+          volumeMounts:
+          - name: ldapsecret
+            mountPath: /etc/secret/ldap/
+            readOnly: true 
+          - name: krbsecret
+            mountPath: /etc/secret/krb/
+            readOnly: true 
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
