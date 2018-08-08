@@ -45,6 +45,12 @@ helm list
 helm install path_to_chart --name release_name
 ```
 
+- To know the status of the release
+
+```console
+helm status release_name
+```
+
 - To remove all kubernetes objects
 
 ```console
