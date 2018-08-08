@@ -1,0 +1,6 @@
+rabbitmqctl list_users | grep guest
+
+rabbitmqctl change_password guest somepassword
+
+egrep "rabbit_user|rabbit_pass" /etc/*/*.conf | grep -v '#'
+
