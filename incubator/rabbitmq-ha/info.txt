@@ -4,3 +4,5 @@ rabbitmqctl change_password guest somepassword
 
 egrep "rabbit_user|rabbit_pass" /etc/*/*.conf | grep -v '#'
 
+https://medium.com/@cashisclay/kubernetes-ingress-82aa960f658e
+
